@@ -23,6 +23,7 @@
             <tr>
                 <th>Product</th>
                 <th>Quantity</th>
+                <th class="price">Price</th>
                 <th>Subtotal</th>
             </tr>
             {% for cart_item in cart.added_items.all %}
@@ -38,8 +39,12 @@
                         </div>
                     </div>
                 </td>
-                <td><input type="number" disabled value="{{ cart_item.quantity }}"></td>
-                <td>${% multiply cart_item.product.price cart_item.quantity %}</td>
+                <td><input type="number" value="{{ cart_item.quantity }}" class="quantity" minlength="0"></td>
+                <td class="price">${{ cart_item.product.price }}</td>
+                <td class="subtotal">
+                    ${% multiply cart_item.product.price cart_item.quantity %}
+                </td>
+                
             </tr>
             {% endfor %}
             
@@ -70,19 +75,22 @@
         
     </div>
 
-    <!-- javascript -->
-
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        var MenuItems = document.getElementById("MenuItems");
-        MenuItems.style.maxHeight = "0px";
-        function menutoggle() {
-            if (MenuItems.style.maxHeight == "0px") {
-                MenuItems.style.maxHeight = "200px"
-            }
-            else {
-                MenuItems.style.maxHeight = "0px"
-            }
-        }
+        $(document).ready(function() {
+            // Function to update subtotal when quantity changes
+            $('.quantity').on('input', function() {
+                var quantity = $(this).val();  // Get the updated quantity
+                var price = parseFloat($(this).closest('tr').find('.price').text().replace('$', ''));
+                var subtotal = quantity * price; // Calculate the subtotal
+                $(this).closest('tr').find('.subtotal').text('$' + subtotal.toFixed(2)); // Update the subtotal
+            });
+        });
     </script>
-    
+    <style>
+        .price{
+            display: none;
+        }
+    </style>
 {% endblock content %}
