@@ -4,22 +4,20 @@
 {% block content %}
 {% include 'header.html' %}
     
-    <!-- Single Products -->
     <div class="small-container single-product">
         <div class="row">
             <div class="col-2">
                 <img src="{{ product.image.url }}" width="100%" id="ProductImg">
-
             </div>
             <div class="col-2">
                 <p>{{ product.title }}</p>
                 <h1>{{ product.title }}</h1>
                 <h4>${{ product.price }}</h4>
-                <form method="post" action="{% url 'add_to_cart' %}" enctype="multipart/form-data">
+                <form id="addToCartForm" method="post" action="{% url 'add_to_cart' %}" enctype="multipart/form-data">
                     {% csrf_token %}
                     <input type="hidden" value="{{ product.id }}" name="product_id">
                     <input type="number" name="quantity" value="1">
-                    <button type="submit" class="btn">Add To Cart</button>
+                    <button id="addToCartBtn" type="submit" class="btn">Add To Cart</button>
                 </form>
                     
                 <h3>Product Details <i class="fa fa-indent"></i></h3>
@@ -30,24 +28,21 @@
     </div>
    
  
-    <!-- product gallery -->
     <script>
-        var ProductImg = document.getElementById("ProductImg");
-        var SmallImg = document.getElementsByClassName("small-img");
+        var addToCartBtn = document.getElementById("addToCartBtn");
+        var addToCartForm = document.getElementById("addToCartForm");
 
-        SmallImg[0].onclick = function () {
-            ProductImg.src = SmallImg[0].src;
-        }
-        SmallImg[1].onclick = function () {
-            ProductImg.src = SmallImg[1].src;
-        }
-        SmallImg[2].onclick = function () {
-            ProductImg.src = SmallImg[2].src;
-        }
-        SmallImg[3].onclick = function () {
-            ProductImg.src = SmallImg[3].src;
-        }
+        addToCartBtn.onclick = function (event) {
+            event.preventDefault(); 
 
+            var isLoggedIn = {% if user.is_authenticated  %}true{% else %}false{% endif %};
+
+            if (!isLoggedIn) {
+                alert("Please login to add items to your cart.");
+            } else {
+                addToCartForm.submit(); 
+            }
+        };
     </script>
 
 {% endblock content %}

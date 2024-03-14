@@ -1,53 +1,53 @@
 {% extends 'layout.html' %}
 {% load static %}
 
-
 {% block content %}
 {% include 'header.html' %}
 {% include 'banner_layout.html' %}
 
-    <div class="categories">
-        <div class="small-container">
-            <div class="row">
-                <div class="col-3">
-                    <img src="{% static 'assets/images/category-1.jpg' %}">
-                </div>
-                <div class="col-3">
-                    <img src="{% static 'assets/images/category-2.jpg' %}">
-                </div>
-                <div class="col-3">
-                    <img src="{% static 'assets/images/category-3.jpg' %}">
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Featured Products -->
-
+<div class="categories">
     <div class="small-container">
-        <h2 class="title">Featured Products</h2>
         <div class="row">
-            {% for i in featured_product %}
-            <div class="col-4">
-                <a href="{% url 'detail_product' i.id %}"><img src="{{ i.image.url }}"></a>
-                <h4>{{ i.title }}</h4>
-                <p>${{ i.price }}</p>
+            <div class="col-3">
+                <img class="category-image" src="{% static 'assets/images/category-1.jpg' %}">
             </div>
-            {% endfor %}
-        </div>
-        <h2 class="title">Latest Products</h2>
-        <div class="row">
-            {% for i in latest_product %}
-            <div class="col-4">
-                <a href="{% url 'detail_product' i.id %}"><img src="{{ i.image.url }}"></a>
-                <h4>{{ i.title }}</h4>
-                <p>${{ i.price }}</p>
+            <div class="col-3">
+                <img class="category-image" src="{% static 'assets/images/category-2.jpg' %}">
             </div>
-            {% endfor %}
-            
-            
+            <div class="col-3">
+                <img class="category-image" src="{% static 'assets/images/category-3.jpg' %}">
+            </div>
         </div>
-        
     </div>
+</div>
+
+<!-- Featured Products -->
+
+<div class="small-container">
+    <h2 class="title">Featured Products</h2>
+    <div class="row">
+        {% for i in featured_product %}
+        <div class="col-4 product-col">
+            <a href="{% url 'detail_product' i.id %}">
+                <img class="product-image" src="{{ i.image.url }}">
+            </a>
+            <h4>{{ i.title }}</h4>
+            <p>${{ i.price }}</p>
+        </div>
+        {% endfor %}
+    </div>
+    <h2 class="title">Latest Products</h2>
+    <div class="row">
+        {% for i in latest_product %}
+        <div class="col-4 product-col">
+            <a href="{% url 'detail_product' i.id %}">
+                <img class="product-image" src="{{ i.image.url }}">
+            </a>
+            <h4>{{ i.title }}</h4>
+            <p>${{ i.price }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
 
 {% endblock content %}

@@ -1,4 +1,5 @@
 from django.db import models
+from category.models import *
 
 # Create your models here.
 class Product(models.Model):
@@ -13,6 +14,7 @@ class Product(models.Model):
     delete_status = models.IntegerField(choices=DELETE_CHOICES,default=DELETE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    Category = models.ForeignKey(Category,null=True,on_delete=models.CASCADE)
 
     def __str__(self) -> str:
         return self.title

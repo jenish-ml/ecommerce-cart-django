@@ -3,6 +3,18 @@
     padding: 0;
     box-sizing: border-box;
 }
+.product-col {
+    height: 326;
+    width: 255.1;
+}
+
+
+.product-image {
+    height: ;
+    width: 235.1;
+    object-fit: fill;
+}
+
 
 body{
     font-family: 'Poppins', sans-serif;
@@ -451,7 +463,27 @@ form a{
     transform: translateX(100px);
     transition: transform 1s;
 }
+.search-form {
+    display: flex;
+    flex-direction: row;
+}
 
+.search-box {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    margin-right: 5px;
+}
+
+.search-btn {
+    padding: 8px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    height: 30px;
+    margin-top: 10px;
+    padding: 5px;
+}
 /* Media query for menu */
 @media only screen and (max-width: 800px){
 
