@@ -5,7 +5,7 @@
             <a href="{% url 'index' %}"><img src="{% static 'assets/images/BroCart.png' %}" alt="logo" width="125px"></a>
         </div>
         <nav>
-            <ul id="MenuItems">
+            <ul id="MenuItems" class="menu-items">
                 <li><a href="{% url 'index' %}">Home</a></li>
                 <li><a href="{% url 'products' %}">Products</a></li>
 
@@ -14,9 +14,71 @@
                 {% else %}
                 <li><a href="{% url 'orders' %}">Orders</a></li>
                 <li><a href="{% url 'signout' %}">SignOut</a></li>
-                <a href="{% url 'cart' %}"><img src="{% static 'assets/images/cart.png' %}" width="30px" height="30px"></a>
+                <li><a href="{% url 'cart' %}"><img src="{% static 'assets/images/cart.png' %}" width="30px" height="30px"></a></li>
                 {% endif %}
+                <li>
+                    <select id="category-filter" class="category-filter">
+                        <option value="">All Categories</option>
+                        {% for category in categories %}
+                        <option value="{{ category.title }}">{{ category.title }}</option>
+                        {% endfor %}
+                    </select>
+                </li>
+                <li>
+                    <form action="{% url 'search' %}" method="GET" class="search-form">
+                        <input type="text" name="q" placeholder="Search..." class="search-box">
+                        <button type="submit" class="search-btn"><i class="fa fa-search"></i></button>
+                    </form>
+                </li>
             </ul>
+            <button id="menu-toggle" class="menu-toggle"><i class="fa fa-bars"></i></button>
         </nav>
     </div>
 </div>
+<style>
+    
+/* Media query for menu */
+@media only screen and (max-width: 800px) {
+    .navbar .menu-items {
+        position: absolute;
+        top: 70px;
+        left: 0;
+        background: #333;
+        width: 100%;
+        overflow: hidden;
+        transition: max-height 0.5s;
+        display: none; /* Hide initially */
+    }
+
+    .navbar .menu-items.show {
+        display: block;
+    }
+
+    .navbar .menu-items li {
+        display: block;
+        margin-right: 50px;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .navbar .menu-items li a {
+        color: white;
+    }
+
+    .menu-toggle {
+        display: block;
+        cursor: pointer;
+    }
+}
+@media screen and (min-width: 801px) {
+    .navbar .menu-toggle {
+        display: none;
+    }
+    .navbar .menu-items {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+}
+
+</style>

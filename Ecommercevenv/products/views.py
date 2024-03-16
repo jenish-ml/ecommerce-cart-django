@@ -6,11 +6,19 @@ from django.http import JsonResponse
 
 # Create your views here.
 def index(request):
+    category = request.GET.get('category')
+    product_list = Product.objects.filter(delete_status=Product.LIVE).order_by('priority')
+    categories = Category.objects.all()
+
+    if category:
+        product_list = product_list.filter(Category__title=category)
+
     featured_product = Product.objects.order_by('-priority')[:4]
     latest_product = Product.objects.order_by('-id')[:4]
     context = {
         'featured_product' : featured_product,
         'latest_product' : latest_product,
+        'categories': categories
     }
     return render(request,'index.html',context)
 

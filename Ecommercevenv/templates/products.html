@@ -6,17 +6,9 @@
 <div class="small-container">
     <div class="row row-2">
         <h2 style="display: inline;">All Products</h2>
-        <select id="category-filter" class="category-filter">
-            <option value="">All Categories</option>
-            {% for category in categories %}
-            <option value="{{ category.title }}">{{ category.title }}</option>
-            {% endfor %}
-        </select>
-        <form action="" method="GET" class="search-form">
-            <input type="text" name="q" placeholder="Search..." class="search-box">
-            <button type="submit" class="search-btn"><i class="fa fa-search"></i></button>
-        </form>
     </div>
+    
+    {% if product %}
     {% for product_chunks in product|chunks:4 %}
     <div class="row">
         {% for product in product_chunks %}
@@ -27,8 +19,6 @@
         </div>
         {% endfor %}
     </div>
-    {% endfor %}
-
     <div class="page-btn">
         {% if product.has_previous %}
         <a href="?page={{product.previous_page_number}}"><span>&#8592;</span></a>
@@ -40,23 +30,10 @@
         <a href="?page={{product.next_page_number}}"><span>&#8594;</span></a>
         {% endif %}
     </div>
+    {% endfor %}
+    {% else %}
+    <p>No products found.</p>
+    {% endif %}
 </div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $('#search-button').click(function() {
-            var query = $('#search-input').val();
-            window.location.href = '/products/?q=' + query;
-        });
-        $('#category-filter').change(function() {
-            var categoryId = $(this).val();
-            var url = '';
-            if (categoryId !== '') {
-                url += '?category=' + categoryId;
-            }
-            window.location.href = url;
-        });
-    });
-</script>
 
 {% endblock content %}

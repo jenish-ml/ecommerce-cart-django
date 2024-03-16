@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     
@@ -60,17 +60,27 @@
             <p class="copyright">Copyright 2020 - Samwit Adhikary</p>
         </div>
     </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    var MenuItems = document.getElementById("MenuItems");
-    MenuItems.style.maxHeight = "0px";
-    function menutoggle() {
-        if (MenuItems.style.maxHeight == "0px") {
-            MenuItems.style.maxHeight = "200px"
-        }
-        else {
-            MenuItems.style.maxHeight = "0px"
-        }
-    }
+    $(document).ready(function() {
+        $('#menu-toggle').click(function() {
+            $('.menu-items').toggleClass('show');
+        });
+
+        $('#search-button').click(function() {
+            var query = $('#search-input').val();
+            window.location.href = '/products/?q=' + query;
+        });
+        $('#category-filter').change(function() {
+            var categoryId = $(this).val();
+            var url = '';
+            if (categoryId !== '') {
+                url += '?category=' + categoryId;
+            }
+            window.location.href = '/products?category=' + categoryId;
+        });
+    });
 </script>
 
 </body>
